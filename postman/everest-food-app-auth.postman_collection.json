@@ -1,0 +1,101 @@
+{
+  "info": {
+    "name": "Everest Food App - Auth API",
+    "description": "Register and Login endpoints for everest-food-app backend",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000" },
+    { "key": "email", "value": "demo@everestfood.com" },
+    { "key": "password", "value": "SecurePass123!" }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/health"
+      },
+      "response": []
+    },
+    {
+      "name": "Register",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Demo User\",\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}"
+        },
+        "url": "{{baseUrl}}/api/register"
+      },
+      "response": [
+        {
+          "name": "201 Created",
+          "status": "Created",
+          "code": 201,
+          "header": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{\n  \"success\": true,\n  \"message\": \"Registration successful\",\n  \"user\": {\n    \"id\": \"665f1a2b3c4d5e6f7a8b9c0d\",\n    \"name\": \"Demo User\",\n    \"email\": \"demo@everestfood.com\",\n    \"createdAt\": \"2026-06-09T12:00:00.000Z\"\n  }\n}"
+        },
+        {
+          "name": "409 Duplicate Email",
+          "status": "Conflict",
+          "code": 409,
+          "body": "{\n  \"success\": false,\n  \"message\": \"An account with this email already exists\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}"
+        },
+        "url": "{{baseUrl}}/api/login"
+      },
+      "response": [
+        {
+          "name": "200 OK",
+          "status": "OK",
+          "code": 200,
+          "body": "{\n  \"success\": true,\n  \"message\": \"Login successful\",\n  \"user\": {\n    \"id\": \"665f1a2b3c4d5e6f7a8b9c0d\",\n    \"name\": \"Demo User\",\n    \"email\": \"demo@everestfood.com\",\n    \"createdAt\": \"2026-06-09T12:00:00.000Z\"\n  }\n}"
+        },
+        {
+          "name": "401 Invalid Credentials",
+          "status": "Unauthorized",
+          "code": 401,
+          "body": "{\n  \"success\": false,\n  \"message\": \"Invalid email or password\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Get Current User (protected)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/me"
+      },
+      "response": [
+        {
+          "name": "200 OK",
+          "status": "OK",
+          "code": 200,
+          "body": "{\n  \"success\": true,\n  \"user\": {\n    \"id\": \"665f1a2b3c4d5e6f7a8b9c0d\",\n    \"name\": \"Demo User\",\n    \"email\": \"demo@everestfood.com\",\n    \"createdAt\": \"2026-06-09T12:00:00.000Z\"\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "Logout",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": "{{baseUrl}}/api/logout"
+      },
+      "response": []
+    }
+  ]
+}

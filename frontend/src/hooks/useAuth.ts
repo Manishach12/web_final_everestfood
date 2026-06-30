@@ -18,7 +18,7 @@ export function useAuth(): UseAuthResult {
     let active = true;
 
     async function loadUser() {
-      const response = await fetch('/api/auth/me');
+      const response = await fetch('/api/v1/auth/whoami');
       const result = await response.json();
 
       if (!active) return;

@@ -4,4 +4,6 @@
  */
 export { RegisterPage } from './RegisterPage';
 export { LoginPage } from './LoginPage';
-export { DashboardPage } from './DashboardPage';
+import DashboardShell from './DashboardPage';
+export { DashboardShell };
+export { ProfileUpdatePage } from './ProfileUpdatePage';

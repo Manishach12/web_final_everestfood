@@ -1,11 +1,15 @@
 import { Router, Request } from 'express';
-import { register } from '../controllers/register.controller';
-import { login, logout, me } from '../controllers/login.controller';
 import { authMiddleware } from '../middleware/auth.middleware';
 import multer from 'multer';
 import path from 'path';
 import { randomUUID } from 'crypto';
-import { whoami, updateProfile, changePassword } from '../controllers/auth.controller';
+import {
+  getAllBlogs,
+  getBlogById,
+  createBlog,
+  updateBlog,
+  deleteBlog,
+} from '../controllers/blog.controller';
 
 const router = Router();
 
@@ -28,17 +32,15 @@ const upload = multer({
     if (allowed.includes(file.mimetype)) {
       cb(null, true);
     } else {
-      cb(new Error('Invalid file type. Only JPEG, PNG, WEBP, and GIF are allowed.'));
+      cb(new Error('Invalid file type'));
     }
   },
 });
 
-router.post('/register', register);
-router.post('/login', login);
-router.post('/logout', logout);
-router.get('/me', authMiddleware, me);
-router.get('/v1/auth/whoami', authMiddleware, whoami);
-router.put('/v1/auth/update', authMiddleware, upload.single('profileImage'), updateProfile);
-router.put('/v1/auth/password', authMiddleware, changePassword);
+router.get('/', getAllBlogs);
+router.get('/:id', getBlogById);
+router.post('/', authMiddleware, upload.single('image'), createBlog);
+router.put('/:id', authMiddleware, upload.single('image'), updateBlog);
+router.delete('/:id', authMiddleware, deleteBlog);
 
 export default router;

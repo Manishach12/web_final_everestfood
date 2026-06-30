@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
-import { DashboardPage } from '@/pages/DashboardPage';
+import { DashboardShell } from '@/components/DashboardShell';
 import { getServerUser } from '@/lib/session';
 
 export default async function Page() {
@@ -9,5 +9,5 @@ export default async function Page() {
     redirect('/login');
   }
 
-  return <DashboardPage user={result.user} />;
+  return <DashboardShell user={result.user} />;
 }
